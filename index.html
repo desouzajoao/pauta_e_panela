@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pauta & Panela — Histórias que também alimentam.</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracota: '#B85C38',
+                        creme: '#F5E9DC',
+                        cafe: '#3B2A24',
+                        salvia: '#8A9A7B',
+                        mostarda: '#D8A24A',
+                        tomate: '#C6452D',
+                    },
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'paper-texture': "url('data:image/svg+xml,%3Csvg width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 100 100\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cfilter id=\\'noise\\'%3E%3CfeTurbulence type=\\'fractalNoise\\' baseFrequency=\\'0.8\\' numOctaves=\\'4\\' stitchTiles=\\'stitch\\'/%3E%3C/filter%3E%3Crect width=\\'100\\' height=\\'100\\' filter=\\'url(%23noise)\\' opacity=\\'0.05\\'/%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F5E9DC;
+            color: #3B2A24;
+        }
+        
+        .editorial-border {
+            border: 1px solid rgba(59, 42, 36, 0.2);
+        }
+
+        .editorial-border-b {
+            border-bottom: 1px solid rgba(59, 42, 36, 0.2);
+        }
+
+        /* Tape effect for the newsletter and images */
+        .tape {
+            position: absolute;
+            width: 80px;
+            height: 25px;
+            background-color: rgba(216, 162, 74, 0.4); /* Mostarda transparent */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transform: rotate(-3deg);
+            top: -10px;
+            left: 50%;
+            margin-left: -40px;
+            z-index: 10;
+        }
+
+        .img-hover-zoom {
+            overflow: hidden;
+        }
+        
+        .img-hover-zoom img {
+            transition: transform 0.5s ease;
+        }
+        
+        .img-hover-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        .recipe-card-bg {
+            background-image: 
+                linear-gradient(transparent 95%, rgba(59, 42, 36, 0.1) 95%), 
+                linear-gradient(to right, transparent 95%, rgba(59, 42, 36, 0.1) 95%);
+            background-size: 100% 1.5rem, 1.5rem 100%;
+            background-color: #fbf5ef;
+        }
+    </style>
+</head>
+<body class="font-inter antialiased relative min-h-screen flex flex-col bg-paper-texture">
+
+    <!-- Navbar -->
+    <header class="editorial-border-b py-5 px-6 md:px-12 sticky top-0 bg-creme/95 backdrop-blur-sm z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="#" class="flex flex-col items-center group">
+                <div class="flex items-center gap-2">
+                    <!-- Símbolo da Panela e Vapor (Estilizado) -->
+                    <div class="relative text-terracota">
+                        <i class="ph ph-cooking-pot text-4xl"></i>
+                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 font-playfair text-2xl italic text-cafe opacity-80 group-hover:text-terracota transition-colors">&</span>
+                    </div>
+                    <div class="font-playfair text-3xl font-bold tracking-tight text-cafe">
+                        Pauta <span class="text-terracota font-normal italic">&</span> Panela
+                    </div>
+                </div>
+                <span class="text-[10px] tracking-widest uppercase mt-1 text-terracota font-medium">Histórias que também alimentam</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex gap-8 text-sm uppercase tracking-wider font-medium text-cafe/80">
+                <a href="#" class="hover:text-terracota transition-colors">Receitas</a>
+                <a href="#" class="hover:text-terracota transition-colors">Histórias</a>
+                <a href="#" class="hover:text-terracota transition-colors">Mercados</a>
+                <a href="#" class="hover:text-terracota transition-colors">Sobre</a>
+            </nav>
+
+            <!-- Icons -->
+            <div class="flex items-center gap-4 text-cafe text-xl">
+                <button class="hover:text-terracota transition-colors"><i class="ph ph-magnifying-glass"></i></button>
+                <button class="hover:text-terracota transition-colors hidden md:block"><i class="ph ph-heart"></i></button>
+                <button class="md:hidden hover:text-terracota"><i class="ph ph-list"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories / Tags Bar -->
+    <div class="editorial-border-b overflow-x-auto whitespace-nowrap hide-scrollbar bg-creme">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex gap-4 text-xs font-medium uppercase tracking-wide">
+            <a href="#" class="bg-salvia text-white px-4 py-1.5 rounded-full hover:opacity-90 transition-opacity">Receita de República</a>
+            <a href="#" class="bg-tomate text-white px-4 py-1.5 rounded-full hover:opacity-90 transition-opacity">Até R$20</a>
+            <a href="#" class="bg-terracota text-white px-4 py-1.5 rounded-full hover:opacity-90 transition-opacity">Receita da Semana</a>
+            <a href="#" class="editorial-border text-cafe px-4 py-1.5 rounded-full hover:bg-cafe hover:text-creme transition-colors">Comida de Família</a>
+            <a href="#" class="editorial-border text-cafe px-4 py-1.5 rounded-full hover:bg-cafe hover:text-creme transition-colors">Café da Tarde</a>
+            <a href="#" class="editorial-border text-cafe px-4 py-1.5 rounded-full hover:bg-cafe hover:text-creme transition-colors">Londrina à Mesa</a>
+            <a href="#" class="editorial-border text-cafe px-4 py-1.5 rounded-full hover:bg-cafe hover:text-creme transition-colors">Feiras & Mercados</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Text -->
+                <div class="order-2 md:order-1">
+                    <span class="text-terracota font-medium tracking-widest text-xs uppercase mb-4 block flex items-center gap-2">
+                        <i class="ph ph-star"></i> Destaque da Semana
+                    </span>
+                    <h1 class="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-cafe">
+                        O bolo simples que virou tradição em uma república de Londrina.
+                    </h1>
+                    <p class="text-cafe/80 mb-8 text-lg leading-relaxed max-w-lg">
+                        Um site de receitas feito por um estudante de jornalismo de Londrina. Comida real, histórias verdadeiras e linguagem que aproxima.
+                    </p>
+                    <a href="#" class="inline-flex items-center gap-2 bg-terracota text-creme px-8 py-3 hover:bg-tomate transition-colors font-medium text-sm tracking-wide">
+                        Ler História <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+                <!-- Image -->
+                <div class="order-1 md:order-2 relative">
+                    <div class="tape rotate-3 right-10 left-auto bg-opacity-60 bg-salvia"></div>
+                    <div class="tape -rotate-6 left-10 bg-opacity-60 bg-mostarda"></div>
+                    <div class="aspect-[4/3] md:aspect-square overflow-hidden editorial-border p-2 bg-white shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=1000" alt="Bolo simples fofinho" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote / Concept Section -->
+        <section class="bg-cafe text-creme py-16 px-6 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 opacity-10 text-[200px] font-playfair leading-none">"</div>
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <i class="ph-fill ph-quotes text-mostarda text-4xl mb-6 mx-auto"></i>
+                <blockquote class="font-playfair text-2xl md:text-3xl italic leading-relaxed mb-6 font-light">
+                    Essa receita nasceu numa quarta-feira caótica de faculdade — e salvou a janta de quatro pessoas.
+                </blockquote>
+                <p class="text-sm font-inter tracking-widest uppercase text-salvia">Jornalismo com cheiro de comida</p>
+            </div>
+        </section>
+
+        <!-- Latest Posts Grid -->
+        <section class="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="font-playfair text-3xl md:text-4xl font-bold text-cafe">Últimas Pautas</h2>
+                    <p class="text-cafe/70 mt-2">Receitas reais, contadas de verdade.</p>
+                </div>
+                <a href="#" class="hidden md:flex items-center gap-1 text-terracota font-medium hover:underline">Ver todas <i class="ph ph-arrow-right"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <!-- Card 1 -->
+                <article class="group cursor-pointer">
+                    <div class="aspect-[4/5] img-hover-zoom mb-4 editorial-border">
+                        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&q=80&w=800" alt="Macarrão" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-tomate text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1">Até R$20</span>
+                        <span class="text-xs text-cafe/60 flex items-center gap-1"><i class="ph ph-clock"></i> 15 min</span>
+                    </div>
+                    <h3 class="font-playfair text-2xl font-bold text-cafe mb-2 group-hover:text-terracota transition-colors">
+                        Macarrão de preguiçoso que salva qualquer dia corrido.
+                    </h3>
+                    <p class="text-cafe/70 text-sm line-clamp-2">
+                        Feito numa panela só, com os ingredientes que sobraram na geladeira no fim do mês.
+                    </p>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="group cursor-pointer">
+                    <div class="aspect-[4/5] img-hover-zoom mb-4 editorial-border relative">
+                        <div class="absolute top-2 right-2 bg-creme text-cafe rounded-full p-2 z-10"><i class="ph ph-bookmark"></i></div>
+                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=800" alt="Café" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="editorial-border text-cafe text-[10px] font-bold uppercase tracking-wider px-2 py-1">Café da Tarde</span>
+                    </div>
+                    <h3 class="font-playfair text-2xl font-bold text-cafe mb-2 group-hover:text-terracota transition-colors">
+                        O café coado da Dona Maria no Mercado Shangri-Lá.
+                    </h3>
+                    <p class="text-cafe/70 text-sm line-clamp-2">
+                        Uma conversa sobre memórias, grãos moídos na hora e a vida no centro de Londrina.
+                    </p>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="group cursor-pointer">
+                    <div class="aspect-[4/5] img-hover-zoom mb-4 editorial-border">
+                        <img src="https://images.unsplash.com/photo-1604152003162-d27e283b4822?auto=format&fit=crop&q=80&w=800" alt="Feijoada" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-salvia text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1">Comida de Família</span>
+                    </div>
+                    <h3 class="font-playfair text-2xl font-bold text-cafe mb-2 group-hover:text-terracota transition-colors">
+                        Feijoada de domingo: a panela que reúne quem a gente ama.
+                    </h3>
+                    <p class="text-cafe/70 text-sm line-clamp-2">
+                        Receita testada, aprovada e com gosto de abraço de vó.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Ficha de Receita Decorativa / Newsletter -->
+        <section class="max-w-5xl mx-auto px-6 py-12 mb-20 relative">
+            <div class="recipe-card-bg editorial-border p-8 md:p-12 shadow-md relative">
+                <div class="tape bg-terracota opacity-70"></div>
+                
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="ph ph-envelope-simple text-terracota text-2xl"></i>
+                            <h2 class="font-playfair text-3xl font-bold text-cafe">Correio Elegante Gastronômico</h2>
+                        </div>
+                        <p class="text-cafe/80 mb-6 mt-4">
+                            Receba novas receitas, bastidores e histórias por e-mail. Sem spam, só comida boa e conversa fiada de qualidade.
+                        </p>
+                        <form class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" placeholder="seu melhor e-mail" class="flex-grow bg-transparent border-b-2 border-cafe/30 pb-2 px-1 focus:outline-none focus:border-terracota transition-colors placeholder:text-cafe/40 text-cafe font-inter">
+                            <button type="submit" class="bg-mostarda text-cafe font-medium uppercase tracking-wider text-sm px-6 py-2 hover:bg-terracota hover:text-creme transition-colors">
+                                Quero receber
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Decorative Graphic Element -->
+                    <div class="hidden md:block w-1/3 border-l-2 border-dashed border-cafe/20 pl-8">
+                        <h4 class="font-playfair italic text-terracota text-xl mb-4">Ficha de Receita</h4>
+                        <ul class="text-sm space-y-3 text-cafe/70 font-inter">
+                            <li class="flex justify-between border-b border-cafe/10 pb-1">
+                                <span>Rendimento:</span> <span class="font-medium text-cafe">Conteúdo semanal</span>
+                            </li>
+                            <li class="flex justify-between border-b border-cafe/10 pb-1">
+                                <span>Tempo:</span> <span class="font-medium text-cafe">5 min de leitura</span>
+                            </li>
+                            <li class="flex justify-between border-b border-cafe/10 pb-1">
+                                <span>Dificuldade:</span> <span class="font-medium text-cafe">Fácil de amar</span>
+                            </li>
+                            <li class="flex justify-between pb-1">
+                                <span>Custo:</span> <span class="font-medium text-cafe">Gratuito</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#e8dccb] pt-16 pb-8 editorial-border-t">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="font-playfair text-3xl font-bold text-cafe mb-4 flex items-center gap-2">
+                        <i class="ph ph-cooking-pot text-terracota"></i>
+                        Pauta & Panela
+                    </div>
+                    <p class="text-cafe/70 max-w-sm mb-6">
+                        Um portal gastronômico com linguagem jornalística, visual editorial e culinária afetiva brasileira. Comida, memória e cotidiano.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full editorial-border flex items-center justify-center text-cafe hover:bg-terracota hover:text-creme hover:border-terracota transition-all">
+                            <i class="ph ph-instagram-logo text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full editorial-border flex items-center justify-center text-cafe hover:bg-terracota hover:text-creme hover:border-terracota transition-all">
+                            <i class="ph ph-tiktok-logo text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full editorial-border flex items-center justify-center text-cafe hover:bg-terracota hover:text-creme hover:border-terracota transition-all">
+                            <i class="ph ph-twitter-logo text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links 1 -->
+                <div>
+                    <h4 class="font-playfair font-bold text-cafe uppercase tracking-widest text-sm mb-6">Navegue</h4>
+                    <ul class="space-y-3 text-cafe/80 text-sm">
+                        <li><a href="#" class="hover:text-terracota transition-colors">Receita da Semana</a></li>
+                        <li><a href="#" class="hover:text-terracota transition-colors">Histórias de Cozinha</a></li>
+                        <li><a href="#" class="hover:text-terracota transition-colors">Londrina à Mesa</a></li>
+                        <li><a href="#" class="hover:text-terracota transition-colors">Feiras & Mercados</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links 2 -->
+                <div>
+                    <h4 class="font-playfair font-bold text-cafe uppercase tracking-widest text-sm mb-6">Projeto</h4>
+                    <ul class="space-y-3 text-cafe/80 text-sm">
+                        <li><a href="#" class="hover:text-terracota transition-colors">Sobre o Autor</a></li>
+                        <li><a href="#" class="hover:text-terracota transition-colors">Contato Comercial</a></li>
+                        <li><a href="#" class="hover:text-terracota transition-colors">Apoie o Jornalismo</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-cafe/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-cafe/60">
+                <p>&copy; 2026 Pauta & Panela. Todos os direitos reservados.</p>
+                <div class="flex items-center gap-2">
+                    <i class="ph ph-map-pin"></i> Feito com carinho em Londrina, PR.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
